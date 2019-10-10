@@ -276,38 +276,6 @@ if __name__ == '__main__':
 
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    RuntimeError                              Traceback (most recent call last)
-
-    <ipython-input-5-73f5e21ca1b6> in <module>()
-        166 
-        167 if __name__ == '__main__':
-    --> 168     template = MyTemplate()
-        169     train_folder = 'data/train'
-        170     test_folder = 'data/test'
-
-
-    <ipython-input-5-73f5e21ca1b6> in __init__(self, **kwargs)
-         10 class MyTemplate(EastDetectionTemplate):
-         11     def __init__(self, **kwargs):
-    ---> 12         super(MyTemplate, self).__init__(**kwargs)
-         13 
-         14     def init_model(self, **kwargs):
-
-
-    ~/anaconda3/lib/python3.6/site-packages/ModelHelper/Common/CommonModels/Template.py in __init__(self, **kwargs)
-         12         if self.use_gpu:
-         13             if not torch.cuda.is_available():
-    ---> 14                 raise RuntimeError('CUDA is not availabel!')
-         15             self.gpu = self.generate_gpu()
-         16         else:
-
-
-    RuntimeError: CUDA is not availabel!
-
-
 ## About future
 Now I only provide Fishnet99EastDetectionModel which use Fishnet99 as backbone; in the future I will provide more kind of models.
 
