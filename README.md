@@ -3,7 +3,7 @@
 ## Introduction
 This is a pytorch re-implementation of EAST: An Efficient and Accurate Scene Text Detector. It is very easy to use!
 ## Installation
-Firstly, we need to install the ModelHelper in pkg/.
+Firstly, we need to install the ModelHelper.
 pip install ModelHelper-0.1.5.tar.gz
 ## DATA
 Then we need to collect our own dataset, and the label shold like the following form.
@@ -20,6 +20,9 @@ or like x0,y0,x1,y1,x2,y2,x3,y3,label format:
 ...
 ## Train
 Finally we can train the model!
+
+
+```python
 from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate
 
 if __name__ == '__main__':
@@ -34,6 +37,8 @@ if __name__ == '__main__':
     test_step = 10
     template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,
                  model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)
+```
+
 ## Fine tune
 You just need to provide the checkpoint path.
 
