@@ -5,7 +5,7 @@ This is a pytorch re-implementation of EAST: An Efficient and Accurate Scene Tex
 ## Installation
 Firstly, we need to install the ModelHelper.
 pip install ModelHelper-0.1.5.tar.gz
-## DATA
+## Data
 Then we need to collect our own dataset, and the label shold like the following form.
 x0,y0,x1,y1,x2,y2,x3,y3 format:
 
