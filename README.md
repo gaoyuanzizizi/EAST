@@ -1,374 +1,300 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "# EAST: An Efficient and Accurate Scene Text Detector\n",
-    "## Introduction\n",
-    "This is a pytorch re-implementation of EAST: An Efficient and Accurate Scene Text Detector. It is very easy to use!\n",
-    "## Installation\n",
-    "Firstly, we need to install the ModelHelper in pkg/."
-   ]
-  },
-  {
-   "cell_type": "raw",
-   "metadata": {},
-   "source": [
-    "pip install ModelHelper-0.1.5.tar.gz"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## DATA\n",
-    "Then we need to collect our own dataset, and the label shold like the following form."
-   ]
-  },
-  {
-   "cell_type": "raw",
-   "metadata": {},
-   "source": [
-    "x0,y0,x1,y1,x2,y2,x3,y3 format:\n",
-    "...\n",
-    "100,100,200,100,200,200,100,200\n",
-    "300,300,600,300,600,600,300,600\n",
-    "...\n",
-    "\n",
-    "or like x0,y0,x1,y1,x2,y2,x3,y3,label format:\n",
-    "...\n",
-    "100,100,200,100,200,200,100,200,dog\n",
-    "300,300,600,300,600,600,300,600,cat\n",
-    "..."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Train\n",
-    "Finally we can train the model!"
-   ]
-  },
-  {
-   "cell_type": "raw",
-   "metadata": {},
-   "source": [
-    "from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate\n",
-    "\n",
-    "if __name__ == '__main__':\n",
-    "    template = EastDetectionTemplate()\n",
-    "    train_folder = 'data/train'\n",
-    "    test_folder = 'data/test'\n",
-    "    output_folder = 'output'\n",
-    "    model_name = 'Fishnet99EastDetectionModel'\n",
-    "    train_batch = 4\n",
-    "    test_batch = 4\n",
-    "    # test every 10 epoch\n",
-    "    test_step = 10\n",
-    "    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,\n",
-    "                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Fine tune\n",
-    "You just need to provide the checkpoint path."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate\n",
-    "\n",
-    "if __name__ == '__main__':\n",
-    "    template = EastDetectionTemplate()\n",
-    "    train_folder = 'data/train'\n",
-    "    test_folder = 'data/test'\n",
-    "    output_folder = 'output'\n",
-    "    model_name = 'Fishnet99EastDetectionModel'\n",
-    "    train_batch = 4\n",
-    "    test_batch = 4\n",
-    "    test_step = 10\n",
-    "    checkpoint = 'xxxxx.pth'\n",
-    "    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,\n",
-    "                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step,\n",
-    "                 checkpoint=checkpoint)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Use CPU\n",
-    "You just need to set use_gpu=False."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate\n",
-    "\n",
-    "if __name__ == '__main__':\n",
-    "    use_gpu = False\n",
-    "    template = EastDetectionTemplate(use_gpu=use_gpu)\n",
-    "    train_folder = 'data/train'\n",
-    "    test_folder = 'data/test'\n",
-    "    output_folder = 'output'\n",
-    "    model_name = 'Fishnet99EastDetectionModel'\n",
-    "    train_batch = 4\n",
-    "    test_batch = 4\n",
-    "    test_step = 10\n",
-    "    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,\n",
-    "                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## More Changes\n",
-    "If you want to make more changes, you can inherit the Template class."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 5,
-   "metadata": {},
-   "outputs": [
-    {
-     "ename": "RuntimeError",
-     "evalue": "CUDA is not availabel!",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mRuntimeError\u001b[0m                              Traceback (most recent call last)",
-      "\u001b[0;32m<ipython-input-5-73f5e21ca1b6>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m    166\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    167\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0m__name__\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m'__main__'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 168\u001b[0;31m     \u001b[0mtemplate\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mMyTemplate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    169\u001b[0m     \u001b[0mtrain_folder\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'data/train'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    170\u001b[0m     \u001b[0mtest_folder\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'data/test'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m<ipython-input-5-73f5e21ca1b6>\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, **kwargs)\u001b[0m\n\u001b[1;32m     10\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0mMyTemplate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mEastDetectionTemplate\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     11\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 12\u001b[0;31m         \u001b[0msuper\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mMyTemplate\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     13\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     14\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0minit_model\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m~/anaconda3/lib/python3.6/site-packages/ModelHelper/Common/CommonModels/Template.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, **kwargs)\u001b[0m\n\u001b[1;32m     12\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0muse_gpu\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     13\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mtorch\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcuda\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mis_available\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 14\u001b[0;31m                 \u001b[0;32mraise\u001b[0m \u001b[0mRuntimeError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'CUDA is not availabel!'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     15\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgpu\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgenerate_gpu\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     16\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mRuntimeError\u001b[0m: CUDA is not availabel!"
-     ],
-     "output_type": "error"
-    }
-   ],
-   "source": [
-    "from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate\n",
-    "from ModelHelper.Detection.DetectionModels.Dataset import EastDataset\n",
-    "from ModelHelper.Common.CommonUtils import get, get_valid\n",
-    "from ModelHelper.Common.CommonUtils.Wrapper import config\n",
-    "\n",
-    "import torch\n",
-    "from torchvision import transforms\n",
-    "\n",
-    "\n",
-    "class MyTemplate(EastDetectionTemplate):\n",
-    "    def __init__(self, **kwargs):\n",
-    "        super(MyTemplate, self).__init__(**kwargs)\n",
-    "\n",
-    "    def init_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the init_model method write your code here or you can directly\n",
-    "        use the parent init_model method;\n",
-    "        :param kwargs:\n",
-    "        :return: model\n",
-    "        \"\"\"\n",
-    "        #\n",
-    "        return super(MyTemplate, self).init_model(**kwargs)\n",
-    "\n",
-    "    def init_trainloader(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the init_trainloader method write your code here or you can\n",
-    "        directly use the parent init_trainloader;\n",
-    "\n",
-    "        for example I don't want the data augmentation code, so I change the code as following;\n",
-    "        :param kwargs:\n",
-    "        :return: train loader\n",
-    "        \"\"\"\n",
-    "\n",
-    "        train_transforms = get('train_transforms', kwargs, None)\n",
-    "        if train_transforms is None:\n",
-    "            train_transforms = transforms.Compose([\n",
-    "                transforms.ToTensor(),\n",
-    "                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])\n",
-    "            ])\n",
-    "        kwargs['transforms'] = train_transforms\n",
-    "\n",
-    "        # train_detection_transforms = get('train_detection_transforms', kwargs, None)\n",
-    "        # if train_detection_transforms is None:\n",
-    "        #     random_crop_threshold = get('random_crop_threshold', kwargs, (1, 4))\n",
-    "        #     random_crop_size = get('random_crop_size', kwargs, 768)\n",
-    "        #     center_rotate_threshold = get('center_rotate_threshold', kwargs, (-30, 30))\n",
-    "        #     flip_type = get('flip_type', kwargs, 'Horizontal')\n",
-    "        #     flip_chance = get('flip_chance', kwargs, 0.5)\n",
-    "        #\n",
-    "        #     train_detection_transforms = DataAugmentation.Compose([\n",
-    "        #         DataAugmentation.Flip(flip_type, flip_chance),\n",
-    "        #         DataAugmentation.CenterRotate(center_rotate_threshold),\n",
-    "        #         DataAugmentation.RandomCrop(random_crop_threshold, random_crop_size)\n",
-    "        #     ])\n",
-    "        # kwargs['detection_transforms'] = train_detection_transforms\n",
-    "        train_folder = get_valid('train_folder', kwargs)\n",
-    "        train_dataset = EastDataset(folder=train_folder, **kwargs)\n",
-    "        train_batch = get('train_batch', kwargs, 4)\n",
-    "        train_worker = get('train_worker', kwargs, 8)\n",
-    "        drop_last = get('drop_last', kwargs, True)\n",
-    "        shuffle = get('shuffle', kwargs, True)\n",
-    "        train_loader = torch.utils.data.DataLoader(train_dataset,\n",
-    "                                                   batch_size=train_batch * len(self.gpu),\n",
-    "                                                   num_workers=train_worker,\n",
-    "                                                   drop_last=drop_last,\n",
-    "                                                   shuffle=shuffle)\n",
-    "        train_data_num = len(train_dataset)\n",
-    "        print('Generate train data loader, train data folder: {}, train data num: {}'.format(train_folder,\n",
-    "                                                                                             train_data_num))\n",
-    "        return train_loader\n",
-    "\n",
-    "    def init_testloader(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the init_testloader method write your code here or you can\n",
-    "        directly use the parent init_testloader;\n",
-    "        :param kwargs:\n",
-    "        :return: test loader\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).init_testloader(**kwargs)\n",
-    "\n",
-    "    def init_optimizer(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the init_optimizer method write your code here or you can\n",
-    "        directly use the parent init_optimizer;\n",
-    "        :param kwargs:\n",
-    "        :return: optimizer\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).init_optimizer(**kwargs)\n",
-    "\n",
-    "    def init_criterion(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the init_criterion method write your code here or you can\n",
-    "        directly use the parent init_criterion;\n",
-    "        :param kwargs:\n",
-    "        :return: criterion\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).init_criterion(**kwargs)\n",
-    "\n",
-    "    def train_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the train_model method write your code here or you can\n",
-    "        directly use the parent train_model;\n",
-    "        :param kwargs:\n",
-    "        :return: train log and train loss\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).train_model(**kwargs)\n",
-    "\n",
-    "    def test_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the test_model method write your code here or you can\n",
-    "        directly use the parent test_model;\n",
-    "        :param kwargs:\n",
-    "        :return: test log and test loss\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).test_model(**kwargs)\n",
-    "\n",
-    "    def eval_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the eval_model method write your code here or you can\n",
-    "        directly use the parent eval_model;\n",
-    "        :param kwargs:\n",
-    "        :return: evaluation score\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).eval_model(**kwargs)\n",
-    "\n",
-    "    def load_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the load_model method write your code here or you can\n",
-    "        directly use the parent load_model;\n",
-    "        :param kwargs:\n",
-    "        :return: model\n",
-    "        \"\"\"\n",
-    "\n",
-    "        return super(MyTemplate, self).load_model(**kwargs)\n",
-    "\n",
-    "    def save_model(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the save_model method write your code here or you can\n",
-    "        directly use the parent save_model;\n",
-    "        :param kwargs:\n",
-    "        :return: checkpoint path\n",
-    "        \"\"\"\n",
-    "        return super(MyTemplate, self).save_model(**kwargs)\n",
-    "\n",
-    "    \n",
-    "    @config\n",
-    "    def run(self, **kwargs):\n",
-    "        \"\"\"\n",
-    "        if you want to change the train logical, you need to change the run method,\n",
-    "         and you need to use the config wrapper;\n",
-    "        :param kwargs: \n",
-    "        :return: None\n",
-    "        \"\"\"\n",
-    "        pass\n",
-    "\n",
-    "    # or you can directly use the parent run method\n",
-    "    # def run(self, **kwargs):\n",
-    "    #     super(MyTemplate, self).run(**kwargs)\n",
-    "\n",
-    "\n",
-    "if __name__ == '__main__':\n",
-    "    template = MyTemplate()\n",
-    "    train_folder = 'data/train'\n",
-    "    test_folder = 'data/test'\n",
-    "    output_folder = 'output'\n",
-    "    model_name = 'Fishnet99EastDetectionModel'\n",
-    "    train_batch = 4\n",
-    "    test_batch = 4\n",
-    "    test_step = 10\n",
-    "    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,\n",
-    "                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)\n"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## About future\n",
-    "Now I only provide Fishnet99EastDetectionModel which use Fishnet99 as backbone; in the future I will provide more kind of models.\n",
-    "\n",
-    "If you have any questions contact me, my email is 1015165757@qq.com, thank you!"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.6.8"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 2
-}
+
+# EAST: An Efficient and Accurate Scene Text Detector
+## Introduction
+This is a pytorch re-implementation of EAST: An Efficient and Accurate Scene Text Detector. It is very easy to use!
+## Installation
+Firstly, we need to install the ModelHelper in pkg/.
+pip install ModelHelper-0.1.5.tar.gz
+## DATA
+Then we need to collect our own dataset, and the label shold like the following form.
+x0,y0,x1,y1,x2,y2,x3,y3 format:
+...
+100,100,200,100,200,200,100,200
+300,300,600,300,600,600,300,600
+...
+
+or like x0,y0,x1,y1,x2,y2,x3,y3,label format:
+...
+100,100,200,100,200,200,100,200,dog
+300,300,600,300,600,600,300,600,cat
+...
+## Train
+Finally we can train the model!
+from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate
+
+if __name__ == '__main__':
+    template = EastDetectionTemplate()
+    train_folder = 'data/train'
+    test_folder = 'data/test'
+    output_folder = 'output'
+    model_name = 'Fishnet99EastDetectionModel'
+    train_batch = 4
+    test_batch = 4
+    # test every 10 epoch
+    test_step = 10
+    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,
+                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)
+## Fine tune
+You just need to provide the checkpoint path.
+
+
+```python
+from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate
+
+if __name__ == '__main__':
+    template = EastDetectionTemplate()
+    train_folder = 'data/train'
+    test_folder = 'data/test'
+    output_folder = 'output'
+    model_name = 'Fishnet99EastDetectionModel'
+    train_batch = 4
+    test_batch = 4
+    test_step = 10
+    checkpoint = 'xxxxx.pth'
+    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,
+                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step,
+                 checkpoint=checkpoint)
+```
+
+## Use CPU
+You just need to set use_gpu=False.
+
+
+```python
+from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate
+
+if __name__ == '__main__':
+    use_gpu = False
+    template = EastDetectionTemplate(use_gpu=use_gpu)
+    train_folder = 'data/train'
+    test_folder = 'data/test'
+    output_folder = 'output'
+    model_name = 'Fishnet99EastDetectionModel'
+    train_batch = 4
+    test_batch = 4
+    test_step = 10
+    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,
+                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)
+```
+
+## More Changes
+If you want to make more changes, you can inherit the Template class.
+
+
+```python
+from ModelHelper.Detection.DetectionModels.Template import EastDetectionTemplate
+from ModelHelper.Detection.DetectionModels.Dataset import EastDataset
+from ModelHelper.Common.CommonUtils import get, get_valid
+from ModelHelper.Common.CommonUtils.Wrapper import config
+
+import torch
+from torchvision import transforms
+
+
+class MyTemplate(EastDetectionTemplate):
+    def __init__(self, **kwargs):
+        super(MyTemplate, self).__init__(**kwargs)
+
+    def init_model(self, **kwargs):
+        """
+        if you want to change the init_model method write your code here or you can directly
+        use the parent init_model method;
+        :param kwargs:
+        :return: model
+        """
+        #
+        return super(MyTemplate, self).init_model(**kwargs)
+
+    def init_trainloader(self, **kwargs):
+        """
+        if you want to change the init_trainloader method write your code here or you can
+        directly use the parent init_trainloader;
+
+        for example I don't want the data augmentation code, so I change the code as following;
+        :param kwargs:
+        :return: train loader
+        """
+
+        train_transforms = get('train_transforms', kwargs, None)
+        if train_transforms is None:
+            train_transforms = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            ])
+        kwargs['transforms'] = train_transforms
+
+        # train_detection_transforms = get('train_detection_transforms', kwargs, None)
+        # if train_detection_transforms is None:
+        #     random_crop_threshold = get('random_crop_threshold', kwargs, (1, 4))
+        #     random_crop_size = get('random_crop_size', kwargs, 768)
+        #     center_rotate_threshold = get('center_rotate_threshold', kwargs, (-30, 30))
+        #     flip_type = get('flip_type', kwargs, 'Horizontal')
+        #     flip_chance = get('flip_chance', kwargs, 0.5)
+        #
+        #     train_detection_transforms = DataAugmentation.Compose([
+        #         DataAugmentation.Flip(flip_type, flip_chance),
+        #         DataAugmentation.CenterRotate(center_rotate_threshold),
+        #         DataAugmentation.RandomCrop(random_crop_threshold, random_crop_size)
+        #     ])
+        # kwargs['detection_transforms'] = train_detection_transforms
+        train_folder = get_valid('train_folder', kwargs)
+        train_dataset = EastDataset(folder=train_folder, **kwargs)
+        train_batch = get('train_batch', kwargs, 4)
+        train_worker = get('train_worker', kwargs, 8)
+        drop_last = get('drop_last', kwargs, True)
+        shuffle = get('shuffle', kwargs, True)
+        train_loader = torch.utils.data.DataLoader(train_dataset,
+                                                   batch_size=train_batch * len(self.gpu),
+                                                   num_workers=train_worker,
+                                                   drop_last=drop_last,
+                                                   shuffle=shuffle)
+        train_data_num = len(train_dataset)
+        print('Generate train data loader, train data folder: {}, train data num: {}'.format(train_folder,
+                                                                                             train_data_num))
+        return train_loader
+
+    def init_testloader(self, **kwargs):
+        """
+        if you want to change the init_testloader method write your code here or you can
+        directly use the parent init_testloader;
+        :param kwargs:
+        :return: test loader
+        """
+
+        return super(MyTemplate, self).init_testloader(**kwargs)
+
+    def init_optimizer(self, **kwargs):
+        """
+        if you want to change the init_optimizer method write your code here or you can
+        directly use the parent init_optimizer;
+        :param kwargs:
+        :return: optimizer
+        """
+
+        return super(MyTemplate, self).init_optimizer(**kwargs)
+
+    def init_criterion(self, **kwargs):
+        """
+        if you want to change the init_criterion method write your code here or you can
+        directly use the parent init_criterion;
+        :param kwargs:
+        :return: criterion
+        """
+
+        return super(MyTemplate, self).init_criterion(**kwargs)
+
+    def train_model(self, **kwargs):
+        """
+        if you want to change the train_model method write your code here or you can
+        directly use the parent train_model;
+        :param kwargs:
+        :return: train log and train loss
+        """
+
+        return super(MyTemplate, self).train_model(**kwargs)
+
+    def test_model(self, **kwargs):
+        """
+        if you want to change the test_model method write your code here or you can
+        directly use the parent test_model;
+        :param kwargs:
+        :return: test log and test loss
+        """
+
+        return super(MyTemplate, self).test_model(**kwargs)
+
+    def eval_model(self, **kwargs):
+        """
+        if you want to change the eval_model method write your code here or you can
+        directly use the parent eval_model;
+        :param kwargs:
+        :return: evaluation score
+        """
+
+        return super(MyTemplate, self).eval_model(**kwargs)
+
+    def load_model(self, **kwargs):
+        """
+        if you want to change the load_model method write your code here or you can
+        directly use the parent load_model;
+        :param kwargs:
+        :return: model
+        """
+
+        return super(MyTemplate, self).load_model(**kwargs)
+
+    def save_model(self, **kwargs):
+        """
+        if you want to change the save_model method write your code here or you can
+        directly use the parent save_model;
+        :param kwargs:
+        :return: checkpoint path
+        """
+        return super(MyTemplate, self).save_model(**kwargs)
+
+    
+    @config
+    def run(self, **kwargs):
+        """
+        if you want to change the train logical, you need to change the run method,
+         and you need to use the config wrapper;
+        :param kwargs: 
+        :return: None
+        """
+        pass
+
+    # or you can directly use the parent run method
+    # def run(self, **kwargs):
+    #     super(MyTemplate, self).run(**kwargs)
+
+
+if __name__ == '__main__':
+    template = MyTemplate()
+    train_folder = 'data/train'
+    test_folder = 'data/test'
+    output_folder = 'output'
+    model_name = 'Fishnet99EastDetectionModel'
+    train_batch = 4
+    test_batch = 4
+    test_step = 10
+    template.run(train_folder=train_folder, test_folder=test_folder, output_folder=output_folder,
+                 model_name=model_name, train_batch=train_batch, test_batch=test_batch, test_step=test_step)
+
+```
+
+
+    ---------------------------------------------------------------------------
+
+    RuntimeError                              Traceback (most recent call last)
+
+    <ipython-input-5-73f5e21ca1b6> in <module>()
+        166 
+        167 if __name__ == '__main__':
+    --> 168     template = MyTemplate()
+        169     train_folder = 'data/train'
+        170     test_folder = 'data/test'
+
+
+    <ipython-input-5-73f5e21ca1b6> in __init__(self, **kwargs)
+         10 class MyTemplate(EastDetectionTemplate):
+         11     def __init__(self, **kwargs):
+    ---> 12         super(MyTemplate, self).__init__(**kwargs)
+         13 
+         14     def init_model(self, **kwargs):
+
+
+    ~/anaconda3/lib/python3.6/site-packages/ModelHelper/Common/CommonModels/Template.py in __init__(self, **kwargs)
+         12         if self.use_gpu:
+         13             if not torch.cuda.is_available():
+    ---> 14                 raise RuntimeError('CUDA is not availabel!')
+         15             self.gpu = self.generate_gpu()
+         16         else:
+
+
+    RuntimeError: CUDA is not availabel!
+
+
+## About future
+Now I only provide Fishnet99EastDetectionModel which use Fishnet99 as backbone; in the future I will provide more kind of models.
+
+If you have any questions contact me, my email is 1015165757@qq.com, thank you!
