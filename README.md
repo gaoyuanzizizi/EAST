@@ -8,16 +8,25 @@ pip install ModelHelper-0.1.5.tar.gz
 ## DATA
 Then we need to collect our own dataset, and the label shold like the following form.
 x0,y0,x1,y1,x2,y2,x3,y3 format:
+
 ...
+
 100,100,200,100,200,200,100,200
+
 300,300,600,300,600,600,300,600
+
 ...
 
 or like x0,y0,x1,y1,x2,y2,x3,y3,label format:
+
 ...
+
 100,100,200,100,200,200,100,200,dog
+
 300,300,600,300,600,600,300,600,cat
+
 ...
+
 ## Train
 Finally we can train the model!
 
