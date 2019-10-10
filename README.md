@@ -4,6 +4,7 @@
 This is a pytorch re-implementation of EAST: An Efficient and Accurate Scene Text Detector. It is very easy to use!
 ## Installation
 Firstly, we need to install the ModelHelper.
+
 pip install ModelHelper-0.1.5.tar.gz
 ## Data
 Then we need to collect our own dataset, and the label shold like the following form.
